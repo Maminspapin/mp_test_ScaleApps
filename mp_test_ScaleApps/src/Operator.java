@@ -72,6 +72,7 @@ class Operator {
                     break;
 
                 case "b":
+                    if (opData.size() == 1) return 0;
                     result = 1;
                     for (int i = 1; i < opData.size(); i++) {
                         result = result * Integer.parseInt(opData.get(i));
