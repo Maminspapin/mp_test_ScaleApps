@@ -98,8 +98,6 @@ class Operator {
             showMsg("\n\nНеобходимо использовать целые числа... \n\n");
             return 0;
 
-        } catch (IndexOutOfBoundsException e) {
-            showMsg("\n\nДанные не получены.\n\n");
         }
 
         return result;
