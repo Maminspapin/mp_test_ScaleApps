@@ -31,7 +31,7 @@ class Operator {
 
         List<String> data = new ArrayList<>();
 
-        String newStr = str.trim().replaceAll("[\\s]{2,}"," ");
+        String newStr = str.trim().replaceAll("[\\s]{2,}", " ");
 
         int n;
         if (isDataOp) n = newStr.split(" ").length;
@@ -49,7 +49,7 @@ class Operator {
 
         File userFile = new File(str);
         if (!userFile.exists()) {
-            showMsg("\n\nФайла "+str+" не существует.\n\n");
+            showMsg("\n\nФайла " + str + " не существует.\n\n");
             return false;
         }
 
@@ -73,6 +73,7 @@ class Operator {
 
                 case "b":
                     if (opData.size() == 1) return 0;
+
                     result = 1;
                     for (int i = 1; i < opData.size(); i++) {
                         result = result * Integer.parseInt(opData.get(i));
@@ -80,11 +81,12 @@ class Operator {
                     break;
 
                 case "c":
-                    if (opData.size() == 2) {
+                    if (opData.size() == 1) {
+                        return 0;
+                    } else if (opData.size() == 2) {
                         opData.add("1");
                         opData.add("0");
-                    }
-                    else if (opData.size() == 3)
+                    } else if (opData.size() == 3)
                         opData.add("0");
                     result = Integer.parseInt(opData.get(1))
                             * Integer.parseInt(opData.get(2))
@@ -98,7 +100,9 @@ class Operator {
         } catch (NumberFormatException e) {
             showMsg("\n\nНеобходимо использовать целые числа... \n\n");
             return 0;
-
+        } catch (IndexOutOfBoundsException e) {
+            showMsg("\n\nНе удалось получить данные для расчета... \n\n");
+            return 0;
         }
 
         return result;
@@ -113,14 +117,15 @@ class Operator {
             showMsg("\n\nРезультат операции = " + result + "\n\n");
         else {
             if (isFileAvailable(dataInOut.get(1)))
-            try(FileWriter writer = new FileWriter(dataInOut.get(1), false)) {
-                String str = String.valueOf(result);
-                writer.write(str);
-                writer.flush();
-                showMsg("\n\nРезультат записан в файл "+dataInOut.get(1)+"\n\n");
-            } catch (IOException e) {
-                showMsg("\n\nЧто-то пошло не так...\n\n");
-            } else showMsg("\n\nФайла для записи результата не существует\n\n");
+                try (FileWriter writer = new FileWriter(dataInOut.get(1), false)) {
+                    String str = String.valueOf(result);
+                    writer.write(str);
+                    writer.flush();
+                    showMsg("\n\nРезультат записан в файл " + dataInOut.get(1) + "\n\n");
+                } catch (IOException e) {
+                    showMsg("\n\nЧто-то пошло не так...\n\n");
+                }
+            else showMsg("\n\nФайла для записи результата не существует\n\n");
         }
     }
 
@@ -164,7 +169,7 @@ class Operator {
                             str += String.valueOf((char) ch);
                         }
 
-                        str = str.replace('\n',' ');
+                        str = str.replace('\n', ' ');
                         dataOp = getData(str, true);
 
                     } catch (IOException e) {
