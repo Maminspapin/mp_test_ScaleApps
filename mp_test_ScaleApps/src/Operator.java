@@ -137,9 +137,13 @@ class Operator {
             List<String> dataOp = new ArrayList<>();
             List<String> dataInOut = getData(getConsolInfo(), false);
 
-            if (dataInOut.size() < 2) {
-                showMsg("\n\nНе указаны все данные для продолжения работы... Программа завершена.\n\n");
-                return;
+            if (dataInOut.size() == 1 && dataInOut.get(0).equals("")) {
+                showMsg("\n\nВариант ввода не задан, вариант вывода не задан. Будет использована консоль.\n\n");
+                dataInOut.set(0, "-");
+                dataInOut.add("-");
+            } else if (dataInOut.size() == 1 && !dataInOut.get(0).equals("")) {
+                showMsg("\n\nВариант вывода не задан. Для вывода результата будет использована консоль.\n\n");
+                dataInOut.add("-");
             }
 
             if ((dataInOut.get(0).equals("-"))) {
